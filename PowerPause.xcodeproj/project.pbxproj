@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1139B19C1E707F7700213C75 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1139B19B1E707F7700213C75 /* main.m */; };
+		1139B1A41E70801C00213C75 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1139B1A31E70801C00213C75 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		1139B1981E707F7700213C75 /* PowerPause */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PowerPause; sourceTree = BUILT_PRODUCTS_DIR; };
 		1139B19B1E707F7700213C75 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1139B1A31E70801C00213C75 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1139B1A41E70801C00213C75 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +46,7 @@
 			children = (
 				1139B19A1E707F7700213C75 /* PowerPause */,
 				1139B1991E707F7700213C75 /* Products */,
+				1139B1A21E70801C00213C75 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,6 +64,14 @@
 				1139B19B1E707F7700213C75 /* main.m */,
 			);
 			path = PowerPause;
+			sourceTree = "<group>";
+		};
+		1139B1A21E70801C00213C75 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1139B1A31E70801C00213C75 /* IOKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +229,7 @@
 		1139B1A01E707F7700213C75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = CJR9TGRR79;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -225,6 +238,7 @@
 		1139B1A11E707F7700213C75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				DEVELOPMENT_TEAM = CJR9TGRR79;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
