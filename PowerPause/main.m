@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <IOKit/ps/IOPowerSources.h>
-
+#import <IOKit/pwr_mgt/IOPMLib.h>
 
 void handle_sigchld(int sig) {
     int status = -1;
@@ -34,6 +34,28 @@ BOOL isOnPower() {
         }
     }
     return ret;
+}
+
+BOOL assertNoIdle(IOPMAssertionID *aid) {
+    IOReturn asserted = IOPMAssertionCreateWithName(kIOPMAssertionTypeNoIdleSleep,
+                                                    kIOPMAssertionLevelOn,
+                                                    CFSTR("PowerPause on power"),
+                                                    aid);
+    if (asserted != kIOReturnSuccess) {
+        NSLog(@"ERROR: Idle assertion failed");
+        return false;
+    }
+    return true;
+}
+
+BOOL clearNoIdle(IOPMAssertionID aid) {
+    IOReturn asserted = IOPMAssertionRelease(aid);
+    
+    if (asserted != kIOReturnSuccess) {
+        NSLog(@"ERROR: Idle unassertion failed");
+        return false;
+    }
+    return true;
 }
 
 int main(int argc, char **argv) {
@@ -102,6 +124,8 @@ int main(int argc, char **argv) {
     tim.tv_sec = 0L;
     tim.tv_nsec = 500000000L;
     BOOL running = YES;
+    IOPMAssertionID assertionID = -1;
+    assertNoIdle(&assertionID);
     
     while (1) {
         if (isOnPower()) {
@@ -110,6 +134,7 @@ int main(int argc, char **argv) {
                 NSLog(@"CONTINUE");
                 kill(child, SIGCONT);  // fg
                 tim.tv_sec = 0L;
+                assertNoIdle(&assertionID);
             }
         } else {
             if (running) {
@@ -117,6 +142,8 @@ int main(int argc, char **argv) {
                 NSLog(@"PAUSE");
                 kill(child, SIGTSTP); // ctrl-z
                 tim.tv_sec = 1L;
+                clearNoIdle(assertionID);
+                assertionID = -1;
             }
         }
         nanosleep(&tim, NULL);
